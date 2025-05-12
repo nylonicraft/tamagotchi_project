@@ -1,32 +1,46 @@
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
+import json
+import os
 
 app = FastAPI()
 
-# Дозвіл на запити з фронтенду
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # для dev-режиму
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+STATE_FILE = "state.json"
 
-# Початковий стан тамагочі
-tamagochi_state = {
-    "hunger": 5,
-    "mood": 5
-}
+class TamagotchiState(BaseModel):
+    hunger: int
+    happiness: int
 
-@app.get("/status")
-def get_status():
-    return tamagochi_state
+def load_state() -> TamagotchiState:
+    if not os.path.exists(STATE_FILE):
+        # Створюємо початковий стан, якщо файл відсутній
+        initial_state = TamagotchiState(hunger=50, happiness=50)
+        save_state(initial_state)
+        return initial_state
+
+    with open(STATE_FILE, "r") as f:
+        data = json.load(f)
+    return TamagotchiState(**data)
+
+def save_state(state: TamagotchiState):
+    with open(STATE_FILE, "w") as f:
+        json.dump(state.dict(), f)
 
 @app.post("/feed")
 def feed():
-    tamagochi_state["hunger"] = max(0, tamagochi_state["hunger"] - 1)
-    return {"message": "You fed the Tamagochi!"}
+    state = load_state()
+    state.hunger = min(state.hunger + 10, 100)  # максимум 100
+    save_state(state)
+    return {"message": "Тамагочі нагодовано!", "state": state}
 
 @app.post("/play")
 def play():
-    tamagochi_state["mood"] = min(10, tamagochi_state["mood"] + 1)
-    return {"message": "You played with the Tamagochi!"}
+    state = load_state()
+    state.happiness = min(state.happiness + 10, 100)
+    save_state(state)
+    return {"message": "Тамагочі пограв!", "state": state}
+
+@app.get("/status")
+def status():
+    state = load_state()
+    return {"state": state}
