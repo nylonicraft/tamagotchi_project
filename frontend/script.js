@@ -18,7 +18,7 @@ async function checkStatus() {
   const res = await fetch(`${api}/status`);
   const data = await res.json();
   document.getElementById('status').innerText = 
-    `Hunger: ${data.state.hunger}, Happiness: ${data.state.happiness}`;
+    `Голод: ${data.state.hunger}, Щастя: ${data.state.happiness}`;
   checkFeelings(); // Перевіряємо стан після кожної дії
 }
 

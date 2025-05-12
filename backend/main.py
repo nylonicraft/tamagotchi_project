@@ -3,16 +3,20 @@ from pydantic import BaseModel
 import json
 import os
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Дозволити всі домени (або вкажіть конкретні)
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.mount("/static", StaticFiles(directory="./frontend"), name="static")
 
 STATE_FILE = "state.json"
 
@@ -63,6 +67,12 @@ def feelings():
     if state.happiness < 30:
         return {"emotion": "Мені нудно... 😞"}
     return {"emotion": "Я щасливий! 😊"}
+
+@app.get("/", response_class=HTMLResponse, summary="Головна сторінка", description="Цей ендпоінт повертає HTML-файл.")
+def root():
+    with open("./frontend/index.html", "r", encoding="utf-8") as f:
+        html_content = f.read()
+    return HTMLResponse(content=html_content)
 
 if __name__ == "__main__":
     import uvicorn
