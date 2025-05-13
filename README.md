@@ -30,10 +30,7 @@
     pip install -r requirements.txt
     ```
 
-3. Запустіть сервер:
-    ```bash
-    uvicorn backend.main:app --reload
-    ```
+3. Запустити run.bat
 
 4. Сервер буде доступний на `http://localhost:8000`.
 
