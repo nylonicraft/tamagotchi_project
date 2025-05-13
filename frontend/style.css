@@ -1,43 +1,50 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     text-align: center;
-    padding: 20px;
     background-color: #302f36;
 }
 
 h1 {
     color: #ffffff;
-    margin: 40px;
-}
-
-p {
-    color: #ffffff;
-    margin: 20px;
+    margin-top: 40px;
+    font-size: 2.5em;
+    text-shadow: 2px 2px 5px #000000;
 }
 
 button {
-    padding: 10px 20px;
+    padding: 15px 30px;
     margin: 10px;
     background-color: #4CAF50;
     color: white;
     border: none;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 10px;
+    font-size: 1.2em;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
 button:hover {
     background-color: #45a049;
+    transform: scale(1.1);
+}
+
+.button-container {
+    margin: 20px 0;
 }
 
 #status {
     margin-top: 20px;
     font-size: 1.5em;
     font-weight: bold;
+    color: #ffffff;
+    text-shadow: 1px 1px 3px #000000;
 }
 
 .emotion {
     font-size: 2em;
     margin-top: 20px;
+    font-weight: bold;
+    text-shadow: 1px 1px 3px #000000;
 }
 
 .emotion.happy {
@@ -46,4 +53,11 @@ button:hover {
 
 .emotion.sad {
     color: #F44336;
+}
+
+footer {
+    margin-top: 40px;
+    color: #ffffff;
+    font-size: 0.9em;
+    text-shadow: 1px 1px 3px #000000;
 }

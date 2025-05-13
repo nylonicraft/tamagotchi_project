@@ -1,4 +1,12 @@
-from imports import *
+import os
+import json
+import asyncio
+
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from pydantic import BaseModel
 
 app = FastAPI()
 
@@ -12,16 +20,15 @@ app.add_middleware(
 
 app.mount("/static", StaticFiles(directory="./frontend"), name="static")
 
-STATE_FILE = "state.json"
+STATE_FILE = os.path.join(os.path.dirname(__file__), "../data/state.json")
 
 class TamagotchiState(BaseModel):
-    hunger: int = 50
+    satiety: int = 50
     happiness: int = 50
 
 def load_state() -> TamagotchiState:
     if not os.path.exists(STATE_FILE):
-        # Створюємо початковий стан, якщо файл відсутній
-        initial_state = TamagotchiState(hunger=50, happiness=50)
+        initial_state = TamagotchiState(satiety=50, happiness=50)
         save_state(initial_state)
         return initial_state
 
@@ -31,21 +38,17 @@ def load_state() -> TamagotchiState:
 
 def save_state(state: TamagotchiState):
     data_to_save = state.dict()
-    print(f"Saving state: {data_to_save}")  # Додано для діагностики
     with open(STATE_FILE, "w") as f:
         json.dump(data_to_save, f)
 
-# Функція для зменшення рівня щастя та ситості
 async def decrease_state():
     while True:
         state = load_state()
-        state.hunger = max(state.hunger - 1, 0)  # Мінімум 0
-        state.happiness = max(state.happiness - 1, 0)  # Мінімум 0
+        state.satiety = max(state.satiety - 1, 0)
+        state.happiness = max(state.happiness - 1, 0)
         save_state(state)
-        print(f"Updated state: {state.dict()}")  # Лог для перевірки
-        await asyncio.sleep(60)  # Зменшення кожні 60 секунд
+        await asyncio.sleep(60)
 
-# Запуск фонового завдання при старті програми
 @app.on_event("startup")
 async def startup_event():
     asyncio.create_task(decrease_state())
@@ -54,7 +57,7 @@ async def startup_event():
 def feed():
     state = load_state()
     print(state)
-    state.hunger = min(state.hunger + 10, 100)  # максимум 100
+    state.satiety = min(state.satiety + 10, 100)
     save_state(state)
     return {"message": "Тамагочі нагодовано!", "state": state}
 
@@ -74,7 +77,7 @@ def status():
 def feelings():
     state = load_state()
     
-    if state.hunger < 30:
+    if state.satiety < 30:
         return {"emotion": "Я голодний! 😢"}
     if state.happiness < 30:
         return {"emotion": "Мені нудно... 😞"}

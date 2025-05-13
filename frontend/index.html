@@ -2,21 +2,20 @@
 <html lang="uk">
     <head>
         <meta charset="UTF-8">
-        <title>Tamagochi</title>
+        <title>Тамагочі</title>
         <link rel="stylesheet" href="/static/style.css">
         <script src="/static/script.js"></script>
     </head>
     <body>
-        <h1>My Virtual Tamagochi</h1>
-        <img id="tamagochi-image" src="/static/media/tamagotchi.png" alt="Tamagochi" width="170" height="170">
-        <br>
-        <button onclick="feed()">🍔 Нагодувати</button>
-        <button onclick="play()">🎮 Пограти</button>
-        <button onclick="checkStatus()">📋 Перевірити статус</button>
-
-        <div id="status"></div>
+        <h1>Мій віртуальний тамагочі</h1>
+        <img id="tamagochi-image" src="/static/media/tamagotchi.png" alt="Тамагочі" width="170" height="170">
+        <div class="button-container">
+            <button onclick="feed()">🍔 Нагодувати</button>
+            <button onclick="play()">🎮 Пограти</button>
+            <button onclick="checkStatus()">📋 Перевірити статус</button>
+        </div>
+        <div id="status" class="status"></div>
         <div id="emotion" class="emotion"></div> 
-    
         <footer>
             <p>Продукція ППП Віхренко & Гавриленко Інкорпорейтед Лтд Лімітед Студіос.<br>
             Прав нема, але вони захищені.</p>
