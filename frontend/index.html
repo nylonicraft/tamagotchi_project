@@ -7,12 +7,30 @@
         <script src="/static/script.js"></script>
     </head>
     <body>
-        <h1>Мій віртуальний тамагочі</h1>
+        <div id="user-id-modal" class="modal">
+            <div class="modal-content">
+                <h2>Виберіть дію</h2>
+                <form id="new-tamagochi-form" onsubmit="createNewTamagochi(event)">
+                    <h3>Створити нового тамагочі</h3>
+                    <input type="text" id="new-user-id" name="new-user-id" placeholder="Введіть UID" required>
+                    <input type="text" id="new-tamagochi-name" name="new-tamagochi-name" placeholder="Введіть ім'я тамагочі" required>
+                    <button type="submit">Створити</button>
+                </form>
+                <hr>
+                <form id="existing-tamagochi-form" onsubmit="returnToExistingTamagochi(event)">
+                    <h3>Повернутися до існуючого тамагочі</h3>
+                    <input type="text" id="existing-user-id" name="existing-user-id" placeholder="Введіть UID" required>
+                    <button type="submit">Повернутися</button>
+                </form>
+            </div>
+        </div>
+
+        <h1 id="tamagochi-name"></h1>
         <img id="tamagochi-image" src="/static/media/tamagotchi.png" alt="Тамагочі" width="170" height="170">
         <div class="button-container">
             <button onclick="feed()">🍔 Нагодувати</button>
             <button onclick="play()">🎮 Пограти</button>
-            <button onclick="checkStatus()">📋 Перевірити статус</button>
+            <button onclick="updateStatusAndFeelings()">📋 Перевірити статус</button>
         </div>
         <div id="status" class="status"></div>
         <div id="emotion" class="emotion"></div> 

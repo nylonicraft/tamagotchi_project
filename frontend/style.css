@@ -61,3 +61,84 @@ footer {
     font-size: 0.9em;
     text-shadow: 1px 1px 3px #000000;
 }
+
+.user-id-container {
+    margin: 20px 0;
+    font-size: 1.2em;
+    color: #ffffff;
+}
+
+.user-id-container input {
+    padding: 5px;
+    font-size: 1em;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+/* Модальне вікно */
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 300px;
+}
+
+.modal-content h2, .modal-content h3 {
+    margin-bottom: 20px;
+}
+
+.modal-content input {
+    padding: 10px;
+    font-size: 1em;
+    margin-bottom: 10px;
+    width: 90%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.modal-content button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.modal-content button:hover {
+    background-color: #45a049;
+}
+
+/* Прихований контейнер */
+.hidden {
+    display: none;
+}
+
+#user-id-container {
+    margin: 20px 0;
+    font-size: 1.2em;
+    color: #ffffff;
+}
+
+#user-id-container input {
+    padding: 5px;
+    font-size: 1em;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
