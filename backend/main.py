@@ -59,8 +59,8 @@ async def decrease_state():
             # Зберігаємо оновлений стан
             save_state(user_id, state)
 
-        # Чекаємо 60 секунд перед наступним циклом
-        await asyncio.sleep(60)
+        # Чекаємо 40 секунд перед наступним циклом
+        await asyncio.sleep(40)
 
 @app.on_event("startup")
 async def startup_event():
@@ -91,11 +91,12 @@ def status(user_id: str):
 @app.get("/feelings/{user_id}", summary="Емоційний стан тамагочі")
 def feelings(user_id: str):
     state = load_state(user_id)
-    if state.satiety < 30:
-        return {"emotion": "Я голодний! 😢"}
-    if state.happiness < 30:
-        return {"emotion": "Мені нудно... 😞"}
-    return {"emotion": "Я щасливий! 😊"}
+    feelings = {
+        "hungry": state.satiety < 30,
+        "bored": state.happiness < 30,
+        "happy": state.satiety >= 30 and state.happiness >= 30
+    }
+    return {"feelings": feelings}
 
 @app.post("/create", summary="Створити нового тамагочі")
 def create_tamagochi(data: dict = Body(...)):

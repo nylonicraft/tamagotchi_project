@@ -29,7 +29,31 @@ button:hover {
 }
 
 .button-container {
-    margin: 20px 0;
+    position: relative;
+    width: 100%; /* Ширина контейнера */
+    height: auto;
+    text-align: center; /* Центрування кнопок */
+}
+
+/* Контейнер для зображення */
+.image-container {
+    position: relative;
+    width: 100%; /* Ширина контейнера */
+    height: 200px; /* Висота контейнера */
+    display: flex;
+    justify-content: center; /* Центрування по горизонталі */
+    align-items: center; /* Центрування по вертикалі */
+    overflow: hidden; /* Приховуємо вихід за межі */
+    margin-bottom: 20px; /* Відступ між контейнером зображення і кнопками */
+}
+
+/* Зображення тамагочі */
+#tamagochi-image {
+    position: absolute;
+    transition: left 0.8s ease-out, transform 0.1s; /* Анімація переміщення та віддзеркалення */
+
+    transform: translate(-50%, -50%); /* Зміщення для точного центрування */
+    z-index: 10; /* Щоб зображення було над кнопками */
 }
 
 #status {
